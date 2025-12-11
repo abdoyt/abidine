@@ -1,0 +1,35 @@
+# Example configuration for denoising training
+
+# Data parameters
+data:
+  train_dir: "data/train"  # Directory containing training images
+  val_dir: "data/val"      # Directory containing validation images (optional)
+  image_size: 256          # Target image size (256 or 512)
+  batch_size: 8            # Batch size for training
+  num_workers: 2           # Number of data loading workers
+
+# Noise simulation parameters
+noise:
+  poisson_scale: 5.0       # Scale for Poisson noise (higher = less noise)
+  gaussian_std: 0.05       # Standard deviation for Gaussian noise
+
+# Model parameters
+model:
+  base_channels: 32        # Base number of channels (32 for lightweight, 64 for larger)
+  in_channels: 1           # Input channels (1 for grayscale)
+  out_channels: 1          # Output channels (1 for grayscale)
+
+# Training parameters
+training:
+  epochs: 50               # Number of training epochs
+  learning_rate: 0.001     # Initial learning rate
+  weight_decay: 0.0001     # L2 regularization
+  device: "auto"           # Device: "auto", "cuda", "cpu"
+  
+# Checkpoint and logging
+output:
+  checkpoint_dir: "artifacts"           # Directory for saving checkpoints
+  checkpoint_name: "denoiser.pt"        # Name of the checkpoint file
+  log_dir: "artifacts/logs"             # Directory for TensorBoard logs
+  csv_log: "artifacts/training_log.csv" # CSV file for training metrics
+  save_every: 5                          # Save checkpoint every N epochs
