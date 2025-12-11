@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "inference": "python inference_denoise.py"
   },
   "dependencies": {
     "next": "16.0.7",
