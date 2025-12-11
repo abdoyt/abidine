@@ -1,0 +1,28 @@
+# Node
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Environment variables
+.env
+.env.local
+
+# Temporary files
+examples/*.png
+examples/*.jpg
+examples/*.jpeg
+examples/*.tif
+examples/*.tiff
+
+# OS
+.DS_Store
+Thumbs.db
