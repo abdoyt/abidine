@@ -20,6 +20,62 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## ML Modules
+
+### Module B: Segmentation (OPTIONAL)
+
+The segmentation module is scaffolded and ready for development. It includes:
+
+#### Components
+
+- **U-Net Model** (`ml/models/unet.py`): Lightweight 2D U-Net architecture for coronary artery segmentation
+- **Mask Dataset** (`ml/data/mask_dataset.py`): Dataset utilities for pairing images with masks, including:
+  - Support for .npy and .png files
+  - Data augmentation (rotation, flip, brightness/contrast adjustments)
+  - Class-balancing via weighted sampling
+  - Synthetic dataset generation for validation
+- **Training** (`ml/train_segment.py`): Training script with:
+  - Argparse configuration
+  - Dice + BCE loss
+  - Model checkpointing
+  - LR scheduling
+  - Support for synthetic datasets
+- **Inference** (`ml/inference_segment.py`): Inference script that:
+  - Consumes denoised images
+  - Generates artery probability masks
+  - Writes colorized overlays for Streamlit visualization
+
+#### Usage
+
+Generate synthetic dataset and train:
+
+```bash
+python ml/train_segment.py --synthetic --num-synthetic 50 --epochs 20
+```
+
+Run inference on denoised images:
+
+```bash
+python ml/inference_segment.py \
+  --model ./checkpoints/segment/best_model.pth \
+  --input-dir ./data/denoised \
+  --output-dir ./data/segmented
+```
+
+Create synthetic dataset for testing:
+
+```python
+from ml.data.mask_dataset import create_synthetic_mask_dataset
+img_dir, mask_dir = create_synthetic_mask_dataset(output_dir="./data/synthetic")
+```
+
+#### Notes
+
+- Module is optional and can be skipped in production
+- All scripts work with synthetic or small public mask datasets
+- Colorized overlays are designed for integration with Streamlit app
+- Probability masks are saved as both .npy (for processing) and .png (for visualization)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
